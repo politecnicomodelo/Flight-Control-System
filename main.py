@@ -1,10 +1,12 @@
+import os
+from datetime import datetime
+from classes import *
+
+
 flight_list = []
 people_list = []
 plane_list = []
 
-import os
-from datetime import datetime
-from classes import *
 
 # touch files
 
@@ -68,7 +70,7 @@ def read_people_txt():
                 new_person.languages_that_speak = l[6].split(',')
 
             elif object_type is Passenger:
-                new_person.is_vip = bool(l[5])
+                new_person.is_vip = l[5] == '1'
                 new_person.special_needs = l[6].split(',')
 
             elif object_type is Pilot:
@@ -76,6 +78,12 @@ def read_people_txt():
 
             people_list.append(new_person)
 
+
+def read_planes_txt():
+    with open('people', 'r') as the_file:
+        l = []
+        for line in the_file:
+            l = line.split('|')
 
 def read_all_txt():
     read_flights_txt()
