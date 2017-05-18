@@ -2,14 +2,21 @@ import os
 from datetime import datetime
 from classes import *
 
+# lists creation
 
 flight_list = []
 people_list = []
 plane_list = []
 
-
-# touch files
-
+def main_menu():
+    """Displays the main program menu"""
+    print("1: Passenger list")
+    print("2: Youngest passenger")
+    print("3: Minimum crew required")
+    print("4: Non-authorized crew members listy")
+    print("5: More than 1 daily flight per crew list")
+    print("6: VIP passengers list")
+    print("7: Exit")
 
 def touch(path):
     """Given a path open that file."""
@@ -88,3 +95,4 @@ def read_planes_txt():
 def read_all_txt():
     read_flights_txt()
     read_people_txt()
+
