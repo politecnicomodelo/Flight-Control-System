@@ -18,6 +18,7 @@ class FlightAttendant(Crew):
         self.languages_that_speak = languages_that_speak
 
     def charge_txt(self, l):
+        # TODO: pasarle una lista de aviones en vez de l[5].split(',') ya que esto es una lista de string y no de aviones.
         Crew.charge_txt(self, l)
         self.models_allowed_to_fly = l[5].split(',')
         self.languages_that_speak = l[6].split(',')
