@@ -1,4 +1,4 @@
-from .person import Person
+from .person import *
 
 
 class Passenger(Person):
@@ -22,4 +22,7 @@ class Passenger(Person):
         self.is_vip = is_vip
         self.special_needs = special_needs
 
-
+    def charge_txt(self, l):
+        Person.charge_txt(self, l)
+        self.is_vip = l[5] == '1'
+        self.special_needs = l[6].split(',')

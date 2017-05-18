@@ -1,4 +1,4 @@
-from .crew import Crew
+from .crew import *
 
 
 class FlightAttendant(Crew):
@@ -17,4 +17,7 @@ class FlightAttendant(Crew):
 
         self.languages_that_speak = languages_that_speak
 
-
+    def charge_txt(self, l):
+        Crew.charge_txt(self, l)
+        self.models_allowed_to_fly = l[5].split(',')
+        self.languages_that_speak = l[6].split(',')
