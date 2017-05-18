@@ -1,3 +1,7 @@
+flight_list = []
+people_list = []
+plane_list = []
+
 import os
 from datetime import datetime
 from classes import *
@@ -41,11 +45,9 @@ def read_flights_txt():
 def read_people_txt():
     """
     Given similar txt:
-
     <line1> Pilot|Rodrigo|Palacios|10-05-1955|12000000|A1,A2,A3
     <line2> FlightAttendant|Maria|Lalala|19-10-1975|44554255|A3,A4|English
     <line3> Passenger|Esteban|Perez|24-04-2011|55987541|1|Vegan
-
     select the first part: Passenger|Pilot|FlightAttendant and create an object of that.
     set the values depending on which type of object is
     """
@@ -78,6 +80,4 @@ def read_people_txt():
 
 def read_all_txt():
     read_flights_txt()
-    read_people_txt()
-
-
+read_people_txt()
