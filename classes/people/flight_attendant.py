@@ -1,7 +1,7 @@
-from .person import Person
+from .crew import Crew
 
 
-class FlightAttendant(Person):
+class FlightAttendant(Crew):
     def __init__(self, name=None, last_name=None, dni=None, date_of_born=None,
                  languages_that_speak=None, models_allowed_to_fly=None):
         """Creates a FlightAttendant
@@ -13,9 +13,8 @@ class FlightAttendant(Person):
         :param languages_that_speak: type<list>
         :param models_allowed_to_fly: type<list>
         """
-        Person.__init__(self, name, last_name, dni, date_of_born)
+        Crew.__init__(self, name, last_name, dni, date_of_born, models_allowed_to_fly)
 
         self.languages_that_speak = languages_that_speak
-        self.models_allowed_to_fly = models_allowed_to_fly
 
 

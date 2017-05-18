@@ -1,7 +1,7 @@
-from .person import Person
+from .crew import Crew
 
 
-class Pilot(Person):
+class Pilot(Crew):
     def __init__(self, name=None, last_name=None, dni=None, date_of_born=None,
                  models_allowed_to_fly=None):
         """Creates a Pilot
@@ -13,6 +13,4 @@ class Pilot(Person):
         :param models_allowed_to_fly: type<list>
         """
 
-        Person.__init__(self, name, last_name, dni, date_of_born)
-
-        self.models_allowed_to_fly = models_allowed_to_fly
+        Crew.__init__(self, name, last_name, dni, date_of_born, models_allowed_to_fly)
