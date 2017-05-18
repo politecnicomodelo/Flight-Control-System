@@ -62,7 +62,7 @@ def read_people_txt():
             new_person.name = l[1]
             new_person.last_name = l[2]
             new_person.date_of_born = datetime.datetime.strptime(l[3], "%d-%m-%Y").date()
-            new_person.dni = l[4]
+            new_person.id_card = l[4]
 
             object_type = type(the_object)  # determine the type of that object: Passenger|Pilot|FlightAttendant
             if object_type is FlightAttendat:
