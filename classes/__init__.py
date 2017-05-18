@@ -1,3 +1,3 @@
-import people
-import flight
-import plane
+from .people import *
+from .flight import *
+from .plane import *

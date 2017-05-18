@@ -5,7 +5,6 @@ plane_list = []
 import os
 from datetime import datetime
 from classes import *
-import main
 
 # touch files
 
@@ -80,4 +79,4 @@ def read_people_txt():
 
 def read_all_txt():
     read_flights_txt()
-read_people_txt()
+    read_people_txt()
