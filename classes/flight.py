@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+
 
 class Flight(object):
     assigned_plane = None

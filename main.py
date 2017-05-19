@@ -86,6 +86,7 @@ def main():
     main_menu()
     option = input()
     if option == "1":
+        os.system('clear')
         origin = input("Insert the origin: ")
         os.system('clear')
         destination = input("Insert the destination: ")
