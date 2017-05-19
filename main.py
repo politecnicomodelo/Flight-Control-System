@@ -2,10 +2,7 @@ import os
 from datetime import datetime
 from classes import *
 
-
-flight_list = []
-people_list = []
-plane_list = []
+airline = Airline()
 
 def main_menu():
     """Displays the main program menu"""
@@ -16,6 +13,7 @@ def main_menu():
     print("5: More than 1 daily flight per crew list")
     print("6: VIP passengers list")
     print("7: Exit")
+
 
 def touch(path):
     """Given a path open that file."""
@@ -52,9 +50,9 @@ def read_flights_txt():
 def read_people_txt():
     """
     Given similar txt:
-    <line1> Pilot|Rodrigo|Palacios|10-05-1955|12000000|A1,A2,A3
-    <line2> FlightAttendant|Maria|Lalala|19-10-1975|44554255|A3,A4|English
-    <line3> Passenger|Esteban|Perez|24-04-2011|55987541|1|Vegan
+    <line1> Pilot|Name|Last Name|10-05-1955|12000000|A1,A2,A3
+    <line2> FlightAttendant|Name|Last Name|19-10-1975|44554255|A3,A4|English
+    <line3> Passenger|Name|Last Name|24-04-2011|55987541|1|Vegan
     select the first part: Passenger|Pilot|FlightAttendant and create an object of that.
     set the values depending on which type of object is
     """
@@ -64,8 +62,10 @@ def read_people_txt():
             l = line.split('|')
             the_object = eval(l[0])  # transform the str (Passenger|Pilot|FlightAttendant) to a real object.
             new_person = the_object()  # create the object
+            if new_person is not Passenger:
+                l[5] = airline.search_plane(l[5].split(','))
             new_person.charge_txt(l)
-            people_list.append(new_person)
+            airline.add_person(new_person)
 
 
 def read_planes_txt():

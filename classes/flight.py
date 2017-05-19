@@ -15,4 +15,3 @@ class Flight(object):
         self.date = date
         self.where_to_where = where_to_where
         self.people_list = people_list
-
