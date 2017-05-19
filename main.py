@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 from classes import *
 
 airline = Airline()
@@ -9,24 +8,10 @@ def main_menu():
     print("1: Passenger list")
     print("2: Youngest passenger")
     print("3: Minimum crew required")
-    print("4: Non-authorized crew members listy")
+    print("4: Non-authorized crew members list")
     print("5: More than 1 daily flight per crew list")
     print("6: VIP passengers list")
     print("7: Exit")
-
-
-def touch(path):
-    """Given a path open that file."""
-    with open(path, 'a'):
-        os.utime(path, None)
-
-
-def touch_files():
-    """ Touch that files"""
-    touch("flights")
-    touch("people")
-    touch("planes")
-
 
 # reading the data of the txt files
 
@@ -87,3 +72,30 @@ def read_all_txt():
     read_flights_txt()
     read_people_txt()
     read_planes_txt()
+
+
+def passengers_per_flight(origin, destination):
+    flight = airline.search_flight((origin, destination))
+    for item in flight.people_list:
+        text = [item.name, item.last_name, str(item.date_of_born), item.dni]
+        print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+
+
+def main():
+    os.system('clear')
+    main_menu()
+    option = input()
+    if option == "1":
+        origin = input("Insert the origin: ")
+        os.system('clear')
+        destination = input("Insert the destination: ")
+        os.system('clear')
+        passengers_per_flight(origin, destination)
+        input()
+    elif option == "7":
+        exit()
+
+# main itself
+
+if __name__ == "__main__":
+    main()

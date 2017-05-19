@@ -21,6 +21,11 @@ class Airline(object):
                     final_list.append(person)
         return final_list
 
+    def search_flight(self, od):
+        for item in self.flight_list:
+            if item.where_to_where[0] == od[0] and item.where_to_where[1] == od[1]:
+                return item
+
     def add_person(self, person):
         self.people_list.append(person)
 
