@@ -1,4 +1,4 @@
-from .crew import Crew
+from .crew import *
 
 
 class Pilot(Crew):
@@ -14,3 +14,7 @@ class Pilot(Crew):
         """
 
         Crew.__init__(self, name, last_name, dni, date_of_born, models_allowed_to_fly)
+
+    def charge_txt(self, l):
+        Crew.charge_txt(self, l)
+        self.models_allowed_to_fly = l[5].split(',')
