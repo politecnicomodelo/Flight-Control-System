@@ -13,5 +13,19 @@ class Airline(object):
                     final_list.append(model)
         return final_list
 
+    def search_person(self, list_str):
+        final_list = []
+        for item in list_str:
+            for person in self.people_list:
+                if person.dni == item:
+                    final_list.append(person)
+        return final_list
+
     def add_person(self, person):
         self.people_list.append(person)
+
+    def add_flight(self, flight):
+        self.flight_list.append(flight)
+
+    def add_plane(self, plane):
+        self.plane_list.append(plane)

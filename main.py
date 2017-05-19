@@ -36,15 +36,12 @@ def read_flights_txt():
     with open('flights', 'r') as the_file:
         l = []
         for line in the_file:
+            line.rstrip('\n')
             l = line.split('|')
-
             new_flight = Flight()
-            new_flight.assigned_plane = l[0]
-            new_flight.date = datetime.strptime(l[1], "%d-%m-%Y").date()
-            new_flight.where_to_where = tuple(l[2].split(','))
-            new_flight.people_list = l[3].split(',')
-
-            flights_list.append(new_flight)
+            l[3] = airline.search_person(l[3].split(','))
+            new_flight.charge_txt(l)
+            airline.add_flight(new_flight)
 
 
 def read_people_txt():
@@ -59,7 +56,9 @@ def read_people_txt():
     with open('people', 'r') as the_file:
         l = []
         for line in the_file:
+            line.rstrip('\n')
             l = line.split('|')
+
             the_object = eval(l[0])  # transform the str (Passenger|Pilot|FlightAttendant) to a real object.
             new_person = the_object()  # create the object
             if new_person is not Passenger:
@@ -69,9 +68,22 @@ def read_people_txt():
 
 
 def read_planes_txt():
-    pass
+    """
+    Given similar txt:
+    <line> Model|Passenger capacity|Minimum crew required
+    """
+
+    with open('planes', 'r') as the_file:
+        l = []
+        for line in the_file:
+            line.rstrip('\n')
+            l = line.split('|')
+            new_plane = Plane()
+            new_plane.charge_txt(l)
+            airline.add_plane(new_plane)
 
 
 def read_all_txt():
     read_flights_txt()
     read_people_txt()
+    read_planes_txt()

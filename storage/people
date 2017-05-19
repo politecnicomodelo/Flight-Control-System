@@ -3,7 +3,7 @@ Passenger|Pedro|Dominguez|13-04-1970|31987542|1|
 Pilot|Rodrigo|Palacios|10-05-1955|12000000|A1,A2,A3
 Pilot|Manuel|Fraga|11-04-1970|33333333|A1,A3
 Pilot|Joaquín|Sarasa|19-09-1975|44554455|A2,A3
-FlightAttendant|Manuel|Sarasa|19-09-1975|44554455|A2,A3,A4|Inglés,Español
+FlightAttendant|Manuel|Sarasa|19-09-1975|44554450|A2,A3,A4|Inglés,Español
 FlightAttendant|Maria|Lalala|19-10-1975|44554255|A3,A4|Inglés
 FlightAttendant|Florencia|Perez|10-10-1985|44533255|A3,A4|Inglés,Portugués
 FlightAttendant|Julia|Dominguez|10-11-1985|44533254|A1,A3,A4|Portugués,Español
