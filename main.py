@@ -75,14 +75,35 @@ def read_all_txt():
     read_planes_txt()
 
 
-def passengers_per_flight(origin, destination):
-    flight = airline.search_flight((origin, destination))
-    #TODO ARREGLAR QUE PASA SI EL DESTINO Y ORIGEN NO COINCIDEN XD
-    for item in flight.passenger_list:
+def ask_flight():
+    origin = input("Insert the origin: ")
+    os.system('clear')
+    destination = input("Insert the destination: ")
+    os.system('clear')
+    return origin, destination
+
+
+def show_passengers(flight_):
+    for item in flight_.passenger_list:
         text = [item.name, item.last_name, str(item.date_of_born), item.dni]
         print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
-        #TODO ARREGLAR COMO SE MUESTRA XD
 
+
+def passengers_per_flight(origin, destination):
+    flight_ = airline.search_flight((origin, destination))
+    #TODO ARREGLAR QUE PASA SI EL DESTINO Y ORIGEN NO COINCIDEN XD
+    show_passengers(flight_)
+
+
+def youngest_passenger(origin, destination):
+    flight_ = airline.search_flight((origin, destination))
+    ages = []
+    for item in flight_.passenger_list:
+        ages.append(item.date_of_born)
+    youngest_date = min(ages)
+    for item in flight_.passenger_list:
+        if item.date_of_born == youngest_date:
+            return item
 
 def main():
     os.system('clear')
@@ -90,12 +111,15 @@ def main():
     option = input()
     if option == "1":
         os.system('clear')
-        origin = input("Insert the origin: ")
-        os.system('clear')
-        destination = input("Insert the destination: ")
-        os.system('clear')
+        #TODO PREGUNTAR A PRUSCINO
+        origin, destination = ask_flight()
         passengers_per_flight(origin, destination)
         input()
+    elif option == "2":
+        os.system('clear')
+        origin, destination = ask_flight()
+        youngest_passenger(origin, destination)
+
     elif option == "7":
         exit()
 
