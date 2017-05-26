@@ -5,7 +5,9 @@ class Flight(object):
     assigned_plane = None
     date = None
     where_to_where = None
-    people_list = None
+    passenger_list = None
+    hour = None
+    crew_list = None
 
     def charge_txt(self, l):
 
@@ -19,5 +21,7 @@ class Flight(object):
 
         self.assigned_plane = l[0]
         self.date = datetime.strptime(l[1], "%d-%m-%Y").date()
-        self.where_to_where = tuple(l[2].split(','))
-        self.people_list = l[3]
+        self.hour = l[2]
+        self.where_to_where = tuple(l[3].split(','))
+        self.crew_list = l[4]
+        self.passenger_list = l[5]

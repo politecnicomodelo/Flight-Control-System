@@ -24,7 +24,8 @@ def read_flights_txt():
             line.rstrip('\n')
             l = line.split('|')
             new_flight = Flight()
-            l[3] = airline.search_person(l[3].split(','))
+            l[4] = airline.search_person(l[4].split(','))
+            l[5] = airline.search_person(l[5].split(','))
             new_flight.charge_txt(l)
             airline.add_flight(new_flight)
 
@@ -69,16 +70,18 @@ def read_planes_txt():
 
 
 def read_all_txt():
-    read_flights_txt()
     read_people_txt()
+    read_flights_txt()
     read_planes_txt()
 
 
 def passengers_per_flight(origin, destination):
     flight = airline.search_flight((origin, destination))
-    for item in flight.people_list:
+    #TODO ARREGLAR QUE PASA SI EL DESTINO Y ORIGEN NO COINCIDEN XD
+    for item in flight.passenger_list:
         text = [item.name, item.last_name, str(item.date_of_born), item.dni]
         print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+        #TODO ARREGLAR COMO SE MUESTRA XD
 
 
 def main():
@@ -99,4 +102,5 @@ def main():
 # main itself
 
 if __name__ == "__main__":
+    read_all_txt()
     main()
