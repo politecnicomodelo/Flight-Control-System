@@ -3,6 +3,7 @@ from classes import *
 
 airline = Airline()
 
+
 def main_menu():
     """Displays the main program menu"""
     print("1: Passenger list")
@@ -24,6 +25,7 @@ def read_flights_txt():
             line.rstrip('\n')
             l = line.split('|')
             new_flight = Flight()
+            l[0] = airline.search_plane(l[0])
             l[4] = airline.search_person(l[4].split(','))
             l[5] = airline.search_person(l[5].split(','))
             new_flight.charge_txt(l)
@@ -47,8 +49,8 @@ def read_people_txt():
 
             the_object = eval(l[0])  # transform the str (Passenger|Pilot|FlightAttendant) to a real object.
             new_person = the_object()  # create the object
-            if new_person is not Passenger:
-                l[5] = airline.search_plane(l[5].split(','))
+            if type(new_person) is not Passenger:
+                l[5] = airline.search_planes(l[5].rstrip('\n').split(','))  # extracted the '\n' and split it
             new_person.charge_txt(l)
             airline.add_person(new_person)
 
@@ -71,11 +73,12 @@ def read_planes_txt():
 
 def read_all_txt():
     read_people_txt()
-    read_flights_txt()
     read_planes_txt()
+    read_flights_txt()
 
 
 def ask_flight():
+    os.system('clear')
     origin = input("Insert the origin: ")
     os.system('clear')
     destination = input("Insert the destination: ")
@@ -83,16 +86,16 @@ def ask_flight():
     return origin, destination
 
 
-def show_passengers(flight_):
-    for item in flight_.passenger_list:
+def show_passengers(list):
+    for item in list:
         text = [item.name, item.last_name, str(item.date_of_born), item.dni]
         print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
 
 
 def passengers_per_flight(origin, destination):
     flight_ = airline.search_flight((origin, destination))
-    #TODO ARREGLAR QUE PASA SI EL DESTINO Y ORIGEN NO COINCIDEN XD
-    show_passengers(flight_)
+    # TODO ARREGLAR QUE PASA SI EL DESTINO Y ORIGEN NO COINCIDEN XD
+    show_passengers(flight_.passenger_list)
 
 
 def youngest_passenger(origin, destination):
@@ -100,26 +103,51 @@ def youngest_passenger(origin, destination):
     ages = []
     for item in flight_.passenger_list:
         ages.append(item.date_of_born)
-    youngest_date = min(ages)
+    youngest_date = max(ages)
     for item in flight_.passenger_list:
         if item.date_of_born == youngest_date:
-            return item
+            text = [item.name, item.last_name, str(item.date_of_born), item.dni]
+            print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+            input()
+
+
+def minimum_crew():
+    list = airline.unrequired_crew()
+    os.system('clear')
+    for item in list:
+        text = [item.where_to_where[0], item.where_to_where[1], str(item.date), item.hour]
+        print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+    input()
+
+
+def wrong_flights():
+    list = airline.unable_crew()
+    os.system('clear')
+    for item in list:
+        text = [item.where_to_where[0], item.where_to_where[1], str(item.date), item.hour]
+        print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+    input()
+
 
 def main():
     os.system('clear')
     main_menu()
     option = input()
     if option == "1":
-        os.system('clear')
-        #TODO PREGUNTAR A PRUSCINO
+        #TODO PREGUNTAR A PRUSCINO SOBRE EL ASK_FLIGHT
         origin, destination = ask_flight()
         passengers_per_flight(origin, destination)
         input()
     elif option == "2":
-        os.system('clear')
         origin, destination = ask_flight()
         youngest_passenger(origin, destination)
-
+    elif option == "3":
+        minimum_crew()
+    elif option == "4":
+        wrong_flights()
+    elif option == "5":
+        show_passengers(airline.tired_crew())
+        input()
     elif option == "7":
         exit()
 
@@ -127,4 +155,5 @@ def main():
 
 if __name__ == "__main__":
     read_all_txt()
-    main()
+    while True:
+        main()
