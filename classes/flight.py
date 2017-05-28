@@ -20,7 +20,7 @@ class Flight(object):
         """
 
         self.assigned_plane = l[0]
-        self.date = datetime.strptime(l[1], "%d-%m-%Y").date()
+        self.date = datetime.strptime(l[1], '%d-%m-%Y').date()
         self.hour = l[2]
         self.where_to_where = tuple(l[3].split(','))
         self.crew_list = l[4]

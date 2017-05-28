@@ -16,5 +16,5 @@ class Passenger(Person):
         """
 
         Person.charge_txt(self, l)
-        self.is_vip = l[5] == '1'  # converts the string "is vip" to bool
+        self.is_vip = l[5] == '1'  # converts the string 'is vip' to bool
         self.special_needs = l[6].split(',')

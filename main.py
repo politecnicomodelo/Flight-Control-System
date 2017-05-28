@@ -4,16 +4,6 @@ from classes import *
 airline = Airline()
 
 
-def main_menu():
-    """Displays the main program menu"""
-    print("1: Passenger list")
-    print("2: Youngest passenger")
-    print("3: Minimum crew required")
-    print("4: Non-authorized crew members list")
-    print("5: More than 1 daily flight per crew list")
-    print("6: VIP passengers list")
-    print("7: Exit")
-
 # reading the data of the txt files
 
 
@@ -79,9 +69,8 @@ def read_all_txt():
 
 def ask_flight():
     os.system('clear')
-    origin = input("Insert the origin: ")
-    os.system('clear')
-    destination = input("Insert the destination: ")
+    origin = input('Insert the origin: ')
+    destination = input('Insert the destination: ')
     os.system('clear')
     return origin, destination
 
@@ -94,7 +83,7 @@ def show_passengers(list):
 
 def passengers_per_flight(origin, destination):
     flight_ = airline.search_flight((origin, destination))
-    # TODO ARREGLAR QUE PASA SI EL DESTINO Y ORIGEN NO COINCIDEN XD
+    # todo check if the flight doesn't exists
     show_passengers(flight_.passenger_list)
 
 
@@ -129,31 +118,58 @@ def wrong_flights():
     input()
 
 
+def print_welcome():
+    print("""
+         _________________________          _____
+        |                         \          \ U \__      _____
+        | WELCOME TO OUR AIRLINE   \__________\   \/_______\___\_____________
+        |        YEAAAAAH          /          < /_/   .....................  `-.
+        |_________________________/            `-----------,----,--------------'
+                                                         _/____/
+    """)
+
+
+def main_menu():
+    """Displays the main program menu"""
+    print("""
+
+    1............................ Passenger list
+    2........................ Youngest passenger
+    3..................... Minimum crew required
+    4.......... Non-authorized crew members list
+    5.... More than 1 daily flight per crew list
+    6....................... VIP passengers list
+    7...................................... Exit
+
+    """)
+    return input()
+
+
 def main():
     os.system('clear')
-    main_menu()
-    option = input()
-    if option == "1":
+    option = main_menu()
+    if option == '1':
         #TODO PREGUNTAR A PRUSCINO SOBRE EL ASK_FLIGHT
         origin, destination = ask_flight()
         passengers_per_flight(origin, destination)
         input()
-    elif option == "2":
+    elif option == '2':
         origin, destination = ask_flight()
         youngest_passenger(origin, destination)
-    elif option == "3":
+    elif option == '3':
         minimum_crew()
-    elif option == "4":
+    elif option == '4':
         wrong_flights()
-    elif option == "5":
+    elif option == '5':
         show_passengers(airline.tired_crew())
         input()
-    elif option == "7":
+    elif option == '7':
         exit()
 
 # main itself
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     read_all_txt()
     while True:
+        print_welcome()
         main()
