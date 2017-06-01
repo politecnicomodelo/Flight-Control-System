@@ -69,16 +69,20 @@ def read_all_txt():
 
 def ask_flight():
     os.system('clear')
-    origin = input('Insert the origin: ')
-    destination = input('Insert the destination: ')
+    origin = input('Insert the origin: ').title()
+    destination = input('Insert the destination: ').title()
     os.system('clear')
     return origin, destination
 
 
 def show_passengers(list):
+    text = ['   Name    ', '    Last Name   ', '    Date of Born    ', '    Dni    ']
+    print('\x1b[2;30;41m' + '{: <20} | {: <20} | {: <20} | {: <1} |' + '\x1b[0m'.format(*text))
     for item in list:
+        text = [item.name, item.last_name, str(item.date_of_born), item.dni]
+        print('{: <20} | {: <20} | {: <20} | {: <11} |'.format(*text))
         text = [item.name, item.last_name, str(item.date_of_born), item.dni, item.special_needs[0]]
-        print('{: >20} | {: >20} | {: >20} | {: >20}| {: >20}'.format(*text))
+        print('{: <20} | {: <20} | {: <20} | {: <20}| {: <20}'.format(*text))
 
 
 def show_special_passengers(list):
@@ -88,7 +92,7 @@ def show_special_passengers(list):
         else:
             needs = "Does not have special needs"
         text = [item.name, item.last_name, str(item.date_of_born), item.dni, item.is_vip, needs]
-        print('{: >20} | {: >20} | {: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+        print('{: <20} | {: <20} | {: <20} | {: <20} | {: <20} | {: <20}'.format(*text))
 
 
 def show_vip_and_special(origin, destination):
@@ -102,6 +106,10 @@ def show_vip_and_special(origin, destination):
 
 def passengers_per_flight(origin, destination):
     flight_ = airline.search_flight((origin, destination))
+    while not flight_:
+        print('Wrong option selection. Enter any key to try again...')
+        input()
+        os.system('clear')
     # todo check if the flight doesn't exists
     show_passengers(flight_.passenger_list)
 
@@ -115,7 +123,7 @@ def youngest_passenger(origin, destination):
     for item in flight_.passenger_list:
         if item.date_of_born == youngest_date:
             text = [item.name, item.last_name, str(item.date_of_born), item.dni]
-            print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+            print('{: <20} | {: <20} | {: <20} | {: <20}'.format(*text))
             input()
 
 
@@ -124,7 +132,7 @@ def minimum_crew():
     os.system('clear')
     for item in list:
         text = [item.where_to_where[0], item.where_to_where[1], str(item.date), item.hour]
-        print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+        print('{: <20} | {: <20} | {: <20} | {: <20}'.format(*text))
     input()
 
 
@@ -133,7 +141,7 @@ def wrong_flights():
     os.system('clear')
     for item in list:
         text = [item.where_to_where[0], item.where_to_where[1], str(item.date), item.hour]
-        print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+        print('{: <20} | {: <20} | {: <20} | {: <20}'.format(*text))
     input()
 
 
@@ -150,6 +158,7 @@ def print_welcome():
 
 def main_menu():
     """Displays the main program menu"""
+    print(30 * '-', "MENU", 30 * '-')
     print("""
 
     1............................ Passenger list
@@ -161,11 +170,14 @@ def main_menu():
     7...................................... Exit
 
     """)
+    print(67 * '-')
+
     return input()
 
 
 def main():
     os.system('clear')
+    print_welcome()
     option = main_menu()
     if option == '1':
         origin, destination = ask_flight()
@@ -185,9 +197,12 @@ def main():
         origin, destination = ask_flight()
         list = show_vip_and_special(origin, destination)
         show_special_passengers(list)
-        input()
     elif option == '7':
         exit()
+    else:
+        print('Wrong option selection. Enter any key to try again...')
+        input()
+        os.system('clear')
 
 # main itself
 
