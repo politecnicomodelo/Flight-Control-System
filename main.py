@@ -77,8 +77,27 @@ def ask_flight():
 
 def show_passengers(list):
     for item in list:
-        text = [item.name, item.last_name, str(item.date_of_born), item.dni]
-        print('{: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+        text = [item.name, item.last_name, str(item.date_of_born), item.dni, item.special_needs[0]]
+        print('{: >20} | {: >20} | {: >20} | {: >20}| {: >20}'.format(*text))
+
+
+def show_special_passengers(list):
+    for item in list:
+        if item.special_needs[0] is not '\n':
+            needs = ", ".join(item.special_needs)
+        else:
+            needs = "Does not have special needs"
+        text = [item.name, item.last_name, str(item.date_of_born), item.dni, item.is_vip, needs]
+        print('{: >20} | {: >20} | {: >20} | {: >20} | {: >20} | {: >20}'.format(*text))
+
+
+def show_vip_and_special(origin, destination):
+    flight_ = airline.search_flight((origin, destination))
+    passengers_list = []
+    for item in flight_.passenger_list:
+        if item.is_vip or item.special_needs[0] is not '\n':
+            passengers_list.append(item)
+    return passengers_list
 
 
 def passengers_per_flight(origin, destination):
@@ -149,7 +168,6 @@ def main():
     os.system('clear')
     option = main_menu()
     if option == '1':
-        #TODO PREGUNTAR A PRUSCINO SOBRE EL ASK_FLIGHT
         origin, destination = ask_flight()
         passengers_per_flight(origin, destination)
         input()
@@ -162,6 +180,11 @@ def main():
         wrong_flights()
     elif option == '5':
         show_passengers(airline.tired_crew())
+        input()
+    elif option == '6':
+        origin, destination = ask_flight()
+        list = show_vip_and_special(origin, destination)
+        show_special_passengers(list)
         input()
     elif option == '7':
         exit()
