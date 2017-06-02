@@ -12,7 +12,7 @@ def read_flights_txt():
     with open('flights', 'r') as the_file:
         l = []
         for line in the_file:
-            line.rstrip('\n')
+            line = line.rstrip('\n')
             l = line.split('|')
             new_flight = Flight()
             l[0] = airline.search_plane(l[0])
@@ -34,7 +34,7 @@ def read_people_txt():
     with open('people', 'r') as the_file:
         l = []
         for line in the_file:
-            line.rstrip('\n')
+            line = line.rstrip('\n')
             l = line.split('|')
 
             the_object = eval(l[0])  # transform the str (Passenger|Pilot|FlightAttendant) to a real object.
@@ -54,7 +54,7 @@ def read_planes_txt():
     with open('planes', 'r') as the_file:
         l = []
         for line in the_file:
-            line.rstrip('\n')
+            line = line.rstrip('\n')
             l = line.split('|')
             new_plane = Plane()
             new_plane.charge_txt(l)
@@ -76,30 +76,38 @@ def ask_flight():
 
 
 def show_passengers(list):
-    text = ['   Name    ', '    Last Name   ', '    Date of Born    ', '    Dni    ']
-    print('\x1b[2;30;41m' + '{: <20} | {: <20} | {: <20} | {: <1} |' + '\x1b[0m'.format(*text))
+    print_table_head()
     for item in list:
         text = [item.name, item.last_name, str(item.date_of_born), item.dni]
         print('{: <20} | {: <20} | {: <20} | {: <11} |'.format(*text))
-        text = [item.name, item.last_name, str(item.date_of_born), item.dni, item.special_needs[0]]
-        print('{: <20} | {: <20} | {: <20} | {: <20}| {: <20}'.format(*text))
+    print_any_key()
+
+
+def print_any_key():
+    print('\n')
+    print('Press enter to continue...')
+    input()
 
 
 def show_special_passengers(list):
+    text = ['   Name ', '    Last Name', '    Date of Born ', '     Dni    ', '      Is vip? ',
+            '      Special_needs           ']
+    print('\x1b[2;30;41m {: <19} | {: <20} | {: <20} | {: <20} | {: <20} | {: <10} | \x1b[0m'.format(*text))
     for item in list:
-        if item.special_needs[0] is not '\n':
+        if item.special_needs[0] is not None:
             needs = ", ".join(item.special_needs)
         else:
             needs = "Does not have special needs"
         text = [item.name, item.last_name, str(item.date_of_born), item.dni, item.is_vip, needs]
-        print('{: <20} | {: <20} | {: <20} | {: <20} | {: <20} | {: <20}'.format(*text))
+        print('{: <20} | {: <20} | {: <20} | {: <20} | {: <20} | {: <30} |'.format(*text))
+    print_any_key()
 
 
 def show_vip_and_special(origin, destination):
     flight_ = airline.search_flight((origin, destination))
     passengers_list = []
     for item in flight_.passenger_list:
-        if item.is_vip or item.special_needs[0] is not '\n':
+        if item.is_vip or item.special_needs[0] is not None:
             passengers_list.append(item)
     return passengers_list
 
@@ -110,8 +118,17 @@ def passengers_per_flight(origin, destination):
         print('Wrong option selection. Enter any key to try again...')
         input()
         os.system('clear')
-    # todo check if the flight doesn't exists
     show_passengers(flight_.passenger_list)
+
+
+def print_table_head():
+    text = ['   Name ', '    Last Name', '    Date of Born ', '    Dni    ']
+    print('\x1b[2;30;41m {: <19} | {: <20} | {: <20} | {: <1} | \x1b[0m'.format(*text))
+
+
+def print_flight_table_head():
+    text = ['   Origin ', '    Destination', '    Flight Date ', '    Hour   ']
+    print('\x1b[2;30;41m {: <19} | {: <20} | {: <20} | {: <1} | \x1b[0m'.format(*text))
 
 
 def youngest_passenger(origin, destination):
@@ -120,29 +137,32 @@ def youngest_passenger(origin, destination):
     for item in flight_.passenger_list:
         ages.append(item.date_of_born)
     youngest_date = max(ages)
+    print_table_head()
     for item in flight_.passenger_list:
         if item.date_of_born == youngest_date:
             text = [item.name, item.last_name, str(item.date_of_born), item.dni]
-            print('{: <20} | {: <20} | {: <20} | {: <20}'.format(*text))
-            input()
+            print('{: <20} | {: <20} | {: <20} | {: <11} |'.format(*text))
+    print_any_key()
 
 
 def minimum_crew():
     list = airline.unrequired_crew()
     os.system('clear')
+    print_flight_table_head()
     for item in list:
         text = [item.where_to_where[0], item.where_to_where[1], str(item.date), item.hour]
-        print('{: <20} | {: <20} | {: <20} | {: <20}'.format(*text))
-    input()
+        print('{: <20} | {: <20} | {: <20} | {: <11} |'.format(*text))
+    print_any_key()
 
 
 def wrong_flights():
     list = airline.unable_crew()
     os.system('clear')
+    print_flight_table_head()
     for item in list:
         text = [item.where_to_where[0], item.where_to_where[1], str(item.date), item.hour]
-        print('{: <20} | {: <20} | {: <20} | {: <20}'.format(*text))
-    input()
+        print('{: <20} | {: <20} | {: <20} | {: <11} |'.format(*text))
+    print_any_key()
 
 
 def print_welcome():
@@ -182,7 +202,6 @@ def main():
     if option == '1':
         origin, destination = ask_flight()
         passengers_per_flight(origin, destination)
-        input()
     elif option == '2':
         origin, destination = ask_flight()
         youngest_passenger(origin, destination)
@@ -191,8 +210,8 @@ def main():
     elif option == '4':
         wrong_flights()
     elif option == '5':
+        os.system('clear')
         show_passengers(airline.tired_crew())
-        input()
     elif option == '6':
         origin, destination = ask_flight()
         list = show_vip_and_special(origin, destination)

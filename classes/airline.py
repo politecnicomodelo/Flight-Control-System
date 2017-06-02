@@ -58,24 +58,6 @@ class Airline(object):
                                 crew_tired.append(crew)
         return crew_tired
 
-    def timetable(self):
-        """ Returns a list of the date of all flights"""
-        return [flight.date for flight in self.flight_list]
-
-    def same_day_flights(self, timetable):
-        """Returns a list of duplicates dates"""
-        return list(set([flight_date for flight_date in timetable if timetable.count(flight_date) > 1]))
-
-    def search_flight_by_date(self, date):
-        """Returns all flights with that date"""
-        return [flight for flight in self.flight_list if flight.date == date]
-
-    def asd(self):
-        duplicated_dates = self.same_day_flights(self.timetable())
-        same_day_flights = [self.search_flight_by_date(date) for date in duplicated_dates]
-        crew_tired =[]
-        # fijarme como arreglar esto, same_day_flights es una matriz D<|:
-        pass
 
     def add_person(self, person):
         self.people_list.append(person)
